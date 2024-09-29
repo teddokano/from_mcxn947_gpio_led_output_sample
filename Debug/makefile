@@ -30,7 +30,7 @@ $(wildcard ../makefile.init) \
 $(wildcard ../makefile.targets) \
 
 
-BUILD_ARTIFACT_NAME := frdmmcxn947_gpio_led_output2
+BUILD_ARTIFACT_NAME := gpio_led_output_sample
 BUILD_ARTIFACT_EXTENSION := axf
 BUILD_ARTIFACT_PREFIX :=
 BUILD_ARTIFACT := $(BUILD_ARTIFACT_PREFIX)$(BUILD_ARTIFACT_NAME)$(if $(BUILD_ARTIFACT_EXTENSION),.$(BUILD_ARTIFACT_EXTENSION),)
@@ -42,24 +42,24 @@ all:
 	+@$(MAKE) --no-print-directory main-build && $(MAKE) --no-print-directory post-build
 
 # Main-build Target
-main-build: frdmmcxn947_gpio_led_output2.axf
+main-build: gpio_led_output_sample.axf
 
 # Tool invocations
-frdmmcxn947_gpio_led_output2.axf: $(OBJS) $(USER_OBJS) makefile $(OPTIONAL_TOOL_DEPS)
+gpio_led_output_sample.axf: $(OBJS) $(USER_OBJS) makefile $(OPTIONAL_TOOL_DEPS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: MCU Linker'
-	arm-none-eabi-gcc -nostdlib -Xlinker -no-warn-rwx-segments -Xlinker -Map="frdmmcxn947_gpio_led_output2.map" -Xlinker --gc-sections -Xlinker -print-memory-usage -Xlinker --sort-section=alignment -Xlinker --cref -mcpu=cortex-m33 -mfpu=fpv5-sp-d16 -mfloat-abi=hard -mthumb -T frdmmcxn947_gpio_led_output2_Debug.ld -o "frdmmcxn947_gpio_led_output2.axf" $(OBJS) $(USER_OBJS) $(LIBS)
+	arm-none-eabi-gcc -nostdlib -Xlinker -no-warn-rwx-segments -Xlinker -Map="gpio_led_output_sample.map" -Xlinker --gc-sections -Xlinker -print-memory-usage -Xlinker --sort-section=alignment -Xlinker --cref -mcpu=cortex-m33 -mfpu=fpv5-sp-d16 -mfloat-abi=hard -mthumb -T "gpio_led_output_sample_Debug.ld" -o "gpio_led_output_sample.axf" $(OBJS) $(USER_OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 
 # Other Targets
 clean:
-	-$(RM) frdmmcxn947_gpio_led_output2.axf
+	-$(RM) gpio_led_output_sample.axf
 	-@echo ' '
 
 post-build:
 	-@echo 'Performing post-build steps'
-	-arm-none-eabi-size "frdmmcxn947_gpio_led_output2.axf"; # arm-none-eabi-objcopy -v -O binary "frdmmcxn947_gpio_led_output2.axf" "frdmmcxn947_gpio_led_output2.bin" ; # checksum -p MCXN947 -d "frdmmcxn947_gpio_led_output2.bin";
+	-arm-none-eabi-size "gpio_led_output_sample.axf"; # arm-none-eabi-objcopy -v -O binary "gpio_led_output_sample.axf" "gpio_led_output_sample.bin" ; # checksum -p MCXN947 -d "gpio_led_output_sample.bin";
 	-@echo ' '
 
 .PHONY: all clean dependents main-build post-build
