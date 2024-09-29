@@ -15,37 +15,22 @@ int main(void)
 	PRINTF( "GPIO Driver example\r\n"  );
 	PRINTF( "The LED is blinking.\r\n" );
 
-	volatile uint32_t*	port0_on	= (uint32_t*)(0x40096000 + 0x44);
-	volatile uint32_t*	port0_off	= (uint32_t*)(0x40096000 + 0x48);
-	volatile uint32_t*	port1_on	= (uint32_t*)(0x40098000 + 0x44);
-	volatile uint32_t*	port1_off	= (uint32_t*)(0x40098000 + 0x48);
-	
 	while (1)
 	{
-#if 0
-		set_pin( 0x40096000 + 0x44, 1 << 10 );
-		delay( 0.9 );
 		set_pin( 0x40096000 + 0x48, 1 << 10 );
 		delay( 0.1 );
-#else
-//		*port0_off	= 1 << 10;
-
-		*(uint32_t*)(0x40096000 + 0x48)	= 1 << 10;
-		delay( 0.1 );
-		*(uint32_t*)(0x40096000 + 0x44)	= 1 << 10;
+		set_pin( 0x40096000 + 0x44, 1 << 10 );
 		delay( 0.9 );
 
-		*(uint32_t*)(0x40096000 + 0x48)	= 1 << 27;
+		set_pin( 0x40096000 + 0x48, 1 << 27 );
 		delay( 0.1 );
-		*(uint32_t*)(0x40096000 + 0x44)	= 1 << 27;
+		set_pin( 0x40096000 + 0x44, 1 << 27 );
 		delay( 0.9 );
 
-		*(uint32_t*)(0x40098000 + 0x48)	= 1 << 2;
+		set_pin( 0x40098000 + 0x48, 1 << 2 );
 		delay( 0.1 );
-		*(uint32_t*)(0x40098000 + 0x44)	= 1 << 2;
+		set_pin( 0x40098000 + 0x44, 1 << 2 );
 		delay( 0.9 );
-
-#endif
 	}
 }
 
