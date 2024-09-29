@@ -6,7 +6,6 @@
 
 void	delay( float sec );
 void	mcu_init( void );
-void	set_pin( uint32_t addr, uint32_t value );
 
 int main(void)
 {
@@ -15,21 +14,8 @@ int main(void)
 	PRINTF( "GPIO Driver example\r\n"  );
 	PRINTF( "The LED is blinking.\r\n" );
 
-	volatile uint32_t*	port0_on	= (uint32_t*)(0x40096000 + 0x44);
-	volatile uint32_t*	port0_off	= (uint32_t*)(0x40096000 + 0x48);
-	volatile uint32_t*	port1_on	= (uint32_t*)(0x40098000 + 0x44);
-	volatile uint32_t*	port1_off	= (uint32_t*)(0x40098000 + 0x48);
-	
 	while (1)
 	{
-#if 0
-		set_pin( 0x40096000 + 0x44, 1 << 10 );
-		delay( 0.9 );
-		set_pin( 0x40096000 + 0x48, 1 << 10 );
-		delay( 0.1 );
-#else
-//		*port0_off	= 1 << 10;
-
 		*(uint32_t*)(0x40096000 + 0x48)	= 1 << 10;
 		delay( 0.1 );
 		*(uint32_t*)(0x40096000 + 0x44)	= 1 << 10;
@@ -44,15 +30,17 @@ int main(void)
 		delay( 0.1 );
 		*(uint32_t*)(0x40098000 + 0x44)	= 1 << 2;
 		delay( 0.9 );
-
-#endif
 	}
 }
 
-void set_pin( uint32_t addr, uint32_t value )
+void delay( float sec )
 {
-	uint32_t*	reg	= (uint32_t*)addr;	
-	*reg	= value;
+	volatile uint32_t	i = 0;
+	
+	for ( i = 0; i < (uint32_t)(1188100.0 * sec); i++ )
+	{
+		__asm( "NOP" ); /* delay */
+	}
 }
 
 void mcu_init( void )
@@ -80,14 +68,3 @@ void mcu_init( void )
 	GPIO_PinInit( BOARD_LED_GREEN_GPIO, BOARD_LED_GREEN_GPIO_PIN, &led_config );
 	GPIO_PinInit( BOARD_LED_BLUE_GPIO,  BOARD_LED_BLUE_GPIO_PIN,  &led_config );
 }
-
-void delay( float sec )
-{
-	volatile uint32_t	i = 0;
-	
-	for ( i = 0; i < (uint32_t)(1188100.0 * sec); i++ )
-	{
-		__asm( "NOP" ); /* delay */
-	}
-}
-

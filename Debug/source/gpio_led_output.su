@@ -1,5 +1,4 @@
 /Users/tedd/dev/mcuxpresso/__hello/gpio_led_output_sample/drivers/fsl_clock.h:1394:20:CLOCK_EnableClock	24	static
-../source/gpio_led_output.c:11:5:main	24	static
-../source/gpio_led_output.c:52:6:set_pin	24	static
-../source/gpio_led_output.c:58:6:mcu_init	16	static
-../source/gpio_led_output.c:84:6:delay	24	static
+../source/gpio_led_output.c:10:5:main	8	static
+../source/gpio_led_output.c:36:6:delay	24	static
+../source/gpio_led_output.c:46:6:mcu_init	16	static
